@@ -1,0 +1,93 @@
+{% extends "layout_admin.html" %}
+{% block title %} Update movie {% endblock %}
+
+{% block content %}
+		{% if error %}
+    	<p class=error><strong>Error:</strong> {{ error }}
+  		{% endif %}
+
+		<style type="text/css">
+		.margintop15{
+		margin-top: 15px;
+					}
+		.marginleft100{
+		margin-left: 130px;
+					}
+		.valuetd{
+		width:150px;
+				}
+		.valuetdd{
+			line-height:140px;
+			width:150px;
+		}
+		
+
+</style>
+<form action="#" method="post">
+	<div class="row margintop15">
+		<div class="col-md-12" align=center>
+			<table class="table-black">
+				<div class="col-md-1 marginleft100">
+				<p></p><h5>Update movie </h5>
+				</div>
+				<tr>
+					<td>
+					<label><b>Title: </b></label>
+					</td>
+					<td>
+ 					<input class= "valuetd" type="text" name="pp"/>
+					</td>
+					<td>
+					<input class type="checkbox" value = "0" name = "checkbx">
+					</td>	
+				</tr>
+				<tr>
+					<td>
+					<label><b>Year of realease: </b></label>
+					</td>
+					<td>
+					<input class = "valuetd" type="text" name="pd"/>	
+					</td>
+					<td>
+					<input class type="checkbox" value = "1" name = "checkbx">
+					</td>
+				</tr>
+				<tr>
+					<td>
+					<label><b>Date available: </b></label>
+					</td>
+					<td>
+					<input class = "valuetd" type="Date" name="pf"/>	
+					</td>
+					<td>
+					<input class type="checkbox" value = "2" name = "checkbx">
+					</td>
+				</tr>
+				<tr>
+					<td>
+					<label><b>Time of Screening: </b></label>
+					</td>
+					<td>
+					<input class = "valuetd" type="Time" name="pg"/>	
+					</td>
+					<td>
+					<input class type="checkbox" value = "3" name = "checkbx">
+					</td>
+				</tr>
+				<tr>
+					<td>
+					<label><b>Short Description: </b></label>
+					</td>
+					<td>
+					<input class = "valuetdd" type="text" name="ph"/>	
+					</td>
+					<td>
+					<input class type="checkbox" value = "4" name = "checkbx">
+					</td>
+				</tr>
+			</table>
+			<div class="col-md-1 marginleft100 margintop15">
+				<p><input type="submit" value="update"/></p>
+				</div>
+</form>
+{% endblock %}	

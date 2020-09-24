@@ -1,0 +1,49 @@
+{% extends "layout_admin.html" %}
+{% block title %} Homepage {% endblock %}
+{% block content %}
+{% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  	{% endif %}
+
+<style type="text/css">
+        .br2 { 
+            display: block; 
+            margin-bottom: 7px; 
+            margin-top: 35px;
+            margin-left: 30px;
+        }
+        .br { 
+            display: block; 
+            margin-bottom: 6px; 
+            margin-left: 30px;
+        } 
+</style>
+<div class= "br2">
+<h3>Welcome {{login_name}}!</h3>
+<p>Below you can find all the movies that are available in our theater at the moment:</p>
+<div class= "row">
+	<div class= "column">
+	{% for y in range(0,q) %}
+	<span class = "br2">Title :</span>
+	<span class = "br">Year of release :</span>
+	<span class = "br">Date available :</span>
+	<span class = "br">Time :</span>
+	<span class = "br">Description :</span>
+	<span class = "br">Tickets available :</span>
+	{% endfor %}
+	</div>
+
+	<div class = "column">
+	<form action="#" method="post">
+	<hr>
+	<ul>
+	{% for i in sav %}
+	<b><span class = "br">Movie {{i[0]}}</b></span>
+	{% for d in i[1:] %}
+	<span class= "br">{{d}}</span>
+	{% endfor %}
+	<span class= "br">______</span>
+	{% endfor %}
+	</div>
+{% endblock %}
+</div>

@@ -1,0 +1,34 @@
+{% extends "layout_user.html" %}
+{% block title %} Book {% endblock %}
+{% block content %}
+{% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  	{% endif %}
+
+<style type="text/css">
+        .br2 { 
+            display: block; 
+            margin-bottom: 7px; 
+            margin-top: 35px;
+            margin-left: 30px;
+        } 
+
+</style>
+<div class= "br2">
+<h2>Booking history</h2> 
+</div>
+	<div class= "br2">
+	{% if htmlmovseendata == [] %}
+	<p>You dont have any bookings in your history.</p>
+	<p>Book tickets for a movie by clicking "Movie Search" and find the movie that you desire to continue!</p>
+	{% else %}
+	{% for i in htmlmovseendata %}
+	<b><span class = "br2"> Booking made for Movie : {{i}}</b></span>
+	{% endfor %}
+	{% endif %}
+	</div>
+</div>
+
+
+
+{% endblock %}

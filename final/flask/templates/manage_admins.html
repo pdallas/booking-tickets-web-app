@@ -1,0 +1,55 @@
+{% extends "layout_admin.html" %}
+{% block title %} Manage admins {% endblock %}
+{% block content %}
+		{% if error %}
+    	<p class=error><strong>Error:</strong> {{ error }}
+  		{% endif %}
+
+  <style type="text/css">
+  	.margintop15{
+	margin-top: 15px;
+}
+	.marginleft100{
+	margin-left: 100px;
+}
+	}
+
+  </style>
+
+<form action="#" method="post">
+	<div class="row margintop15">
+		<div class="col-md-12" align=center>
+			<table class="table-black">
+				<div class="col-md-1 marginleft100">
+				<p></p><h5>Create admin account</h5>
+				</div>
+				<tr>
+					<td>
+					<label><b>Email Address: </b></label>
+					</td>
+					<td>
+ 					<input type="Email" name="adm_mail"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					<label><b>Name: </b></label>
+					</td>
+					<td>
+					<input type="text" name="adm_name"/>	
+					</td>
+				</tr>
+				<tr>
+					<td>
+					<label><b>Password: </b></label>
+					</td>
+					<td>
+					<input type="Password" name="adm_pw"/>	
+					</td>
+				</tr>
+			</table>
+			<div class="col-md-1 marginleft100 margintop15">
+				<p><input type="submit" value="submit"/></p>
+				</div>
+</form>
+{% endblock %}

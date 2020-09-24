@@ -1,0 +1,79 @@
+{% extends "layout_user.html" %}
+{% block title %} Search movies {% endblock %}
+
+{% block content %}
+		{% if error %}
+    	<p class=error><strong>Error:</strong> {{ error }}
+  		{% endif %}
+
+		<style type="text/css">
+		.margintop15{
+		margin-top: 15px;
+					}
+		.marginleft100{
+		margin-left: 130px;
+					}
+		.valuetd{
+		width:150px;
+		margin-left: 60px;
+				}
+		.valuestd{
+		width:40px;
+		margin-left: 20px;
+				}
+		.valuetdd{
+		margin-left: 60px;
+		margin-top:70px;
+		margin-bottom: 100px;
+				}
+		.br { 
+            display: block; 
+            margin-bottom: 7px; 
+            margin-left: 30px;
+        } 
+        .br2 { 
+            display: block; 
+            margin-bottom: 7px; 
+            margin-top: 35px;
+            margin-left: 30px;
+        } 
+
+</style>
+<div class= "row">
+	<div class= "column">
+	{% for y in range(0,b) %}
+	<span class = "br2">Title :</span>
+	<span class = "br">Year of release :</span>
+	<span class = "br">Date available :</span>
+	<span class = "br">Time :</span>
+	<span class = "br">Description :</span>
+	<span class = "br">Tickets available :</span>
+	{% endfor %}
+	</div>
+
+	<div class = "column">
+	<form action="#" method="post">
+	<hr>
+	<ul>
+	{% for i in htmldata %}
+	<b><span class = "br">Movie {{i[0]}}</b></span>
+	{% for d in i[1:] %}
+	<span class= "br">{{d}}</span>
+	{% endfor %}
+	<span class= "br">______</span>
+	{% endfor %}
+	</div>
+	<div class= "column">
+	{% for y in range(0,b) %}
+	<br><input class="valuetdd" type="checkbox" value={{y}} name = "checkbxs"></br>
+	{% endfor %}
+	</div>
+</div>
+
+</ul>
+	
+	<input class ="valuetd" type="submit" value="Book Tickets!">
+	<input class = "valuestd" type="number" name="ticketnum" value= 2>
+</form>
+
+{% endblock %}	
