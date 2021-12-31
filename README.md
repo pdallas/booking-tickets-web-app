@@ -1,60 +1,72 @@
-# InfoCinemas2020_E17040_DALLAS_PANAGIOTIS_IOANNIS
-Για να δημιουργήσουμε το image και τα container πρέπει να τρέξουμε την εντολή “(sudo) docker-compose up –build -d”.
-Εφόσον όλα πάνε καλά και έχουμε τα container σε λειτουργία, μπορούμε να ανοίξουμε τον browser στη διεύθυνση "http://localhost:5000/login".
-Κατά τη πρώτη εκκίνηση του service, γίνεται έλεγχος για το αν υπάρχουν καταχωρήσεις χρηστών στο service μας. Αν δεν υπάρχουν, δημιουργείτε αυτόματα ένας administrator με τα στοιχεία :
+# Simple movie theater booking system
+This web application is built with python's Flask framework, and MongoDB. Both services run in one composed docker container.
+To run the docker containers run the command “(sudo) docker-compose up –build -d”.
+After a couple of seconds, with the containers up and running, open a browser and go to "http://localhost:5000/login".
+For the shake of simplicity, when the application boots for the first time, an admin user is created with the following credentials:
 
 email : admin@admin.net
 
 password : 1234
 
-Έχω εστιάσει πάρα πολύ στο κομμάτι της προσβασιμότητας αξιοποιώντας τη βιβλιοθήκη session του flask. Έτσι λοιπόν όταν κάποιος χρήστης κάνει log-in, διατηρούνται κάποια στοιχεία (όπως email, name) τα οποία και χρησιμοποιούνται σε άλλα entrypoints. Για παράδειγμα, αν κάποιος δεν έχει κάνει log-in δεν έχει access στο entrypoint /manage_admins. Η και ακόμα και να έχει κάνει log-in, πρέπει να ανήκει στη κατηγορία χρήστη "admin". Με αυτή τη νοοτροπία έχω χτίσει όλα τα entrypoints.Γίνονται πάντα έλεγχοι για το αν ο χρήστης του service αφήσει κάτι ασυμπλήρωτο και εμφανίζει το αντίστοιχο μήνυμα, καθώς και για κάποια άλλα inputs όπως αριθμός εισιτηρίων. Γενικά μπορείτε να δοκιμάσετε να βρείτε bugs και μάλιστα θα το εκτιμούσα ιδιαίτερα για να προχωρήσω στις απαραίτητες τροποποιήσεις.
+### Functionality walkthrough
 
-Μικρή περιγραφή της λειτουργικότητας:
-
-Αρχικά μπορεί κάποιος να κάνει Log-in ή sign-up. Γίνονται πάντα έλεγχοι για το άν ο χρήστης του service αφήσει κάτι ασυμπλήρωτο και εμφανίζει το αντίστοιχο μήνυμα.
-Αν ο χρήστης κάνει log-in και το mail δεν υπάρχει στη βάση, τον κάνει αυτόματα redirect στο /sign_up για να κάνει εγγραφή στο infocinemas. Αν αντίστοιχα κάνει sign-up με email το οποίο υπάρχει ήδη καταχωρημένο στη βάση μας, κάνει redirect τον χρήστη στο /login.
+Initially a user can log-in or sign-up. Checks are always made on whether the service user leaves something unfinished and displays the corresponding message.
+If the user logs in and the mail does not exist in the database, it automatically redirects it to /sign_up to register in infocinemas. If the user tries to sign-up with an email that already exists in our database, it redirects the user to / login.
 
 
-Ο απλός χρήστης(user) αφού συνδεθεί βρίσκεται στο user_home, όπου εμφανίζονται όλες οι προβολές που είναι διαθέσιμες αυτή τη στιγμή όπως έχουν τα πραγματικά cinema "Τι παίζεται τώρα".(Δυστυχώς ακόμα δεν υπάρχει έλεγχος σύμφωνα με την ημερομηνία, οπότε μπορεί να του δείχνει και παλιές προβολές).
- Οι επιλογές του απλού χρήστη είναι 3:
+The simple user (user) after logging in redirects to user_home, where all the movies that are currently available are displayed ("What is being played now").
+
+The simple user options are 3:
  
-Movie search:
+**1. Movie search:**
 
-Στο οποίο ο χρήστης αναζητά προβολές για κάποια ταινία. Αν η ταινία που ψάχνει υπάρχει στη βάση, του εμφανίζονται οι πληροφορίες της ταινίας καθώς και τα διαθέσιμα εισιτήρια. Από εκεί, αφού επιλέξει τον αριθμό των εισιτηρίων αλλά και τικάρει την προβολή που τον ενδιαφέρει, μπορεί να προχωρήσει σε κράτηση. Εννοείται πως υπάρχουν οι σχετικοί έλεγχοι. Αν επιλέξει κάποια προβολή που δεν έχει διαθέσιμα εισιτήρια ή αν δηλώσει περισσότερα από τα διαθέσιμα, του εμφανίζεται το ανάλογο μήνυμα.
+In which the user searches for views for a movie. If the movie the user is looking for is in the database, the movie information as well as the available tickets are displayed. From there, after selecting the number of tickets but also ticking the movie of intrest, the user can proceed to booking. If he selects a screening that does not have tickets available or if he declares more than the available ones, the corresponding message is displayed.
 
-Booking history:
 
-Πατώντας το booking history ο χρήστης μπορεί να δει τις προηγούμενες κρατήσεις που έχει κάνει στο παρελθόν.(Δεν έχω προσθέσει ακόμα λεπτομέρειες της κράτησης, όπως εισιτήρια ώρα κλ).
+**2. Booking history:**
 
-Logout: Πατώντας το logout ο χρήστης αποσυνδέεται από το σύστημα και "σπάει" όλα τα sessions που είχαν δημιουργηθεί.
+By clicking on the booking history the user can see the previous reservations he has made in the past.
 
-Home: 
 
-Πατώντας το home ο χρήστης επιστρέφει στην αρχική σελίδα.
+**3. Logout:** 
 
-Ο διαχειριστής(admin) του συστήματος και αυτός  αφού συνδεθεί βρίσκεται στο admin_home, όπου εμφανίζονται όλες οι προβολές που είναι διαθέσιμες.
-Οι επιλογές του διαχειριστή είναι 6:
+By pressing the logout the user logs out of the system and the session ends.
 
-Add_movie:
 
-Στο οποίο ο διαχειριστής προσθέτει μία προβολή ταινίας στη βάση, αφού συμπληρώσει όλα τα απαραίτητα πεδία.
+**4. Home:** 
 
-Delete_movie: 
+By pressing home, the user gets redirected back to homepage.
 
-Πατώντας το delete movie αρχικά ο διαχειριστής μπορεί να αναζητήσει τη ταινία που ψάχνει, και αν βρεθεί αυτή να διαγραφεί. (δεν μου δούλευε καλά αυτό που ζητάτε, δηλαδή να κάνει διαγραφή το παλαιότερο, οπότε κράτησα απλή διαγραφή που παίρνει την πιο καινούρια εγγραφή της βάσης)
+The system administrator (admin) after logging in is in admin_home, where all the available views are displayed.
 
-Update_movie: 
+The administrator options are 6:
 
-Πατώντας update movie, ο διαχειριστής μπορεί να κάνει αναζήτηση της ταινίας που τον ενδιαφέρει να ανανεώσει, δίνοντας τίτλο και έτος κυκλοφορίας. Αφού βρει την ταινία, του εμφανίζονται τα ίδια πεδία με αυτά που υπάρχουν στο add movie.Δίπλα ακριβώς από κάθε πεδίο υπάρχει ένα checkbox, με το οποίο ο διαχειριστής επιλέγει ποια πεδία θέλει να ανανεώσει. Όταν πατήσει το κουμπί update, ανανεώνεται η ταινία στη βάση.
 
-Manage admins:
+**1. Add_movie:**
 
-Επιλέγοντας το manage admins ο διαχειριστής μπορεί να συμπληρώσει μια φόρμα εγγραφής (όπως στο sign up) και το μέλος αυτό θα πάρει και αυτό τα ίδια δικαιώματα.
+In which the administrator adds a movie view to the database, after filling in all the required fields.
 
-Logout: 
 
-Πατώντας το logout ο διαχειριστής αποσυνδέεται από το σύστημα και "σπάει" όλα τα sessions που είχαν δημιουργηθεί.
+**2. Delete_movie:**
 
-Home: 
+By clicking delete movie, the administrator can search for a movie and delete it.
 
-Πατώντας το home ο διαχειριστής επιστρέφει στην αρχική σελίδα.
+
+**3. Update_movie:**
+
+By clicking update movie, the administrator can search for the movie of interes, by giving title and year of release. After finding the movie, right next to each field there is a checkbox, with which the administrator chooses which fields he wants to update. When the update button is pressed, the movie entry gets updated in the database.
+
+
+**4. Manage admins:**
+
+By selecting manage admins the administrator can fill in a registration form (as in sign up) and the added member will get the administrator privileges.
+
+
+**5. Logout:**
+
+Same as a normal user.
+
+**6. Home:**
+
+Same as a normal user.
+
